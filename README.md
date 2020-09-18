@@ -1,1 +1,1 @@
-# React intl POC repo
+# React intl poc repo
