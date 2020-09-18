@@ -1,7 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { login } from "../../actions/auth";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import CommonSection from "./CommonSection";
@@ -36,11 +33,4 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired,
-  login: PropTypes.func.isRequired
-};
-
-export default connect(null, { login })(LoginPage);
+export default LoginPage;
