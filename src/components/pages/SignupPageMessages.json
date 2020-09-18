@@ -1,0 +1,15 @@
+{
+    "en": {
+      "signup.title": "Join the Club! (English)",
+      "signup.subtitle": "Signup subtitle! (from Signup messages - this overwrites subtitle from App messages)",
+      "common.title": "Text from Signup Messages (English)"
+    },
+    "ru": {
+      "signup.title": "присоединиться (Russian)",
+      "common.title": "Text from Signup Messages (Russian)"
+    },
+    "fr": {
+      "signup.title": "joindre le club (French)",
+      "common.title": "Text from Signup Messages (French)"
+    }
+}

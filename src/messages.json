@@ -1,0 +1,17 @@
+{
+  "en": {
+    "signup.title": "Join the Club! (English - From App)",
+    "signup.subtitle": "English subtitle (From App)",
+    "app.title": "English Title (From App)"
+  },
+  "ru": {
+    "signup.title": "Панель (Russian - From App)",
+    "signup.subtitle": "Russian subtitle (From App)",
+    "app.title": "Russian Title (From App)"
+  },
+  "fr": {
+    "signup.title": "Bonjour (French - From App)",
+    "signup.subtitle": "French Subtitle (From App)",
+    "app.title": "French Title (From App)"
+  }
+}

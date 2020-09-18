@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import LoginForm from "../forms/LoginForm";
 import { login } from "../../actions/auth";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import CommonSection from "./CommonSection";
 
 class LoginPage extends React.Component {
-  submit = data =>
-    this.props.login(data).then(() => this.props.history.push("/dashboard"));
 
   render() {
     return (
@@ -15,10 +15,18 @@ class LoginPage extends React.Component {
           <div className="row align-items-center" style={{ height: "100vh" }}>
             <div className="col col-xs-12 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
               <div className="card">
-                <h2 className="card-header">Welcome Back!</h2>
+                <h2 className="card-header">
+                  <FormattedMessage
+                    id="login.title"
+                    defaultMessage="Welcome Back! (Fallback option)"
+                  />
+                </h2>
                 <div className="card-body">
-                  <LoginForm submit={this.submit} />
+                  <small className="form-text text-center">
+                    <Link to="/signup">Sign up</Link> if you don't have an account<br />
+                  </small>
                 </div>
+                <CommonSection />
               </div>
             </div>
           </div>

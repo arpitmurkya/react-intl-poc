@@ -3,83 +3,68 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
 import Loader from "react-loader";
-import { IntlProvider } from "react-intl";
-import HomePage from "./components/pages/HomePage";
-import LoginPage from "./components/pages/LoginPage";
-import DashboardPage from "./components/pages/DashboardPage";
-import SignupPage from "./components/pages/SignupPage";
-import ConfirmationPage from "./components/pages/ConfirmationPage";
-import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
-import ResetPasswordPage from "./components/pages/ResetPasswordPage";
-import UserRoute from "./components/routes/UserRoute";
-import GuestRoute from "./components/routes/GuestRoute";
-import TopNavigation from "./components/navigation/TopNavigation";
-import CharactersPage from "./components/pages/CharactersPage";
-import NewCharacterPage from "./components/pages/NewCharacterPage";
-import { fetchCurrentUserRequest } from "./actions/users";
-import messages from "./messages";
+import routes from "./routes";
+import messages from "./messages.json";
+import { IntlProvider, FormattedMessage } from "react-intl";
+import { setLocale } from "./actions/locale";
+
+const languageSelection = (props) => {
+  const style = { cursor: 'pointer' };
+  return (
+    <div>
+      <a role="button" style={style} onClick={() => props.setLocale("en")}>
+        EN
+        </a>{" "}
+        |
+      <a role="button" style={style} onClick={() => props.setLocale("ru")}>
+        RU
+        </a>{" "}
+        |
+      <a role="button" style={style} onClick={() => props.setLocale("fr")}>
+        FR
+        </a>{" "}
+        |
+      <a role="button" style={style} onClick={() => props.setLocale("random")}>
+        Random
+        </a>
+    </div>
+  )
+}
+
+const headerContent = (props) => {
+  const style = { display: 'flex', justifyContent: 'space-around' };
+  return (
+    <div style={style}>
+      <h2><FormattedMessage
+        id="app.title"
+        defaultMessage="App Title (Fallback option)"
+      /></h2>
+      {languageSelection(props)}
+    </div>
+  )
+}
 
 class App extends React.Component {
-  componentDidMount() {
-    if (this.props.isAuthenticated) this.props.fetchCurrentUserRequest();
-  }
-
   render() {
-    const { location, isAuthenticated, loaded, lang } = this.props;
+    const { loaded, lang } = this.props;
+
     return (
       <IntlProvider locale={lang} messages={messages[lang]}>
         <div>
+          {headerContent(this.props)}
           <Loader loaded={loaded}>
-            {isAuthenticated && <TopNavigation />}
-            <Route location={location} path="/" exact component={HomePage} />
-            <Route
-              location={location}
-              path="/confirmation/:token"
-              exact
-              component={ConfirmationPage}
-            />
-            <GuestRoute
-              location={location}
-              path="/login"
-              exact
-              component={LoginPage}
-            />
-            <GuestRoute
-              location={location}
-              path="/signup"
-              exact
-              component={SignupPage}
-            />
-            <GuestRoute
-              location={location}
-              path="/forgot_password"
-              exact
-              component={ForgotPasswordPage}
-            />
-            <GuestRoute
-              location={location}
-              path="/reset_password/:token"
-              exact
-              component={ResetPasswordPage}
-            />
-            <UserRoute
-              location={location}
-              path="/dashboard"
-              exact
-              component={DashboardPage}
-            />
-            <UserRoute
-              location={location}
-              path="/characters"
-              exact
-              component={CharactersPage}
-            />
-            <UserRoute
-              location={location}
-              path="/characters/new"
-              exact
-              component={NewCharacterPage}
-            />
+            {routes.map((route, index) => {
+              const pageMessages = route.messages;
+              // wrap IntlProvider when JSON for messages exists for the Route else render Route
+              if (pageMessages) {
+                const messageList = { ...messages[lang], ...pageMessages[lang] };
+                return (<IntlProvider key={index} locale={lang} messages={messageList}>
+                  <Route exact={route.exact} path={route.path} component={route.component} />
+                </IntlProvider>);
+              } else {
+                return <Route key={index} exact={route.exact} path={route.path} component={route.component} />
+              }
+            })}
           </Loader>
         </div>
       </IntlProvider>
@@ -88,21 +73,15 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  fetchCurrentUserRequest: PropTypes.func.isRequired,
   loaded: PropTypes.bool.isRequired,
   lang: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: !!state.user.email,
     loaded: state.user.loaded,
     lang: state.locale.lang
   };
 }
 
-export default connect(mapStateToProps, { fetchCurrentUserRequest })(App);
+export default connect(mapStateToProps, { setLocale })(App);

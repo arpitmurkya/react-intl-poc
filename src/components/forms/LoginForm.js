@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
     const { data, errors } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form>
         {errors.global && (
           <div className="alert alert-danger">{errors.global}</div>
         )}
@@ -83,7 +83,7 @@ class LoginForm extends React.Component {
 
         <small className="form-text text-center">
           <Link to="/signup">Sign up</Link> if you don't have an account<br />
-          <Link to="/forgot_password">Forgot Password?</Link>
+          {/* <Link to="/forgot_password">Forgot Password?</Link> */}
         </small>
       </form>
     );

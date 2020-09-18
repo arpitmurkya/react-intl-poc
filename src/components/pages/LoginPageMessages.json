@@ -1,0 +1,14 @@
+{
+    "en": {
+        "login.title": "Welcome Back! (English)",
+        "common.title": "Text from Login Messages"
+    },
+    "ru": {
+        "login.title": "Панел (Russian)",
+        "common.title": "Text from Login Messages (Russian)"
+    },
+    "fr": {
+        "login.title": "Bonjour Sai (French)",
+        "common.title": "Text from Login Messages (French)"
+    }
+}
